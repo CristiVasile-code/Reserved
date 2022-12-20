@@ -27,7 +27,7 @@ public class LogIn{
     }
     @Test
     public void register(){
-        WebElement mainMenu = driver.findElement(By.cssSelector("[data-testid=\"account-info-logged-false\"]"));
+        mainMenu = driver.findElement(By.cssSelector("[data-testid=\"account-info-logged-false\"]"));
         actions = new Actions(driver);
         actions.moveToElement(mainMenu).perform();
         subMenu = driver.findElement(By.cssSelector("[data-testid=\"register\"]"));
