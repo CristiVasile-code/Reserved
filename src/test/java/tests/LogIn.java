@@ -65,7 +65,6 @@ public class LogIn{
     public void logInWithCorrectCredentials(){
         logIn(driver);
         Assert.assertTrue(homePage.mainMenulogged.isEnabled());
-
     }
     @Test
     public void addToCart(){
@@ -77,13 +76,9 @@ public class LogIn{
         actions.moveToElement(homePage.subMeniuTricouri).perform();
         homePage.subMeniuTricouri.click();
         wait(1);
-        driver.findElement(By.cssSelector("#categoryProducts > article:nth-child(2) > figure > a > img")).click();
+        driver.findElement(By.cssSelector("[alt=\"Cămașă slim fit din bumbac - bleumarin - RESERVED\"]")).click();
         wait(1);
-        bla = driver.findElement(By.cssSelector("[alt=\"Cămașă slim fit din bumbac - alb\"]"));
-//        while(!bla.isDisplayed()){
-//            wait(1);
-//        }
-        bla.click();
+        driver.findElement(By.cssSelector("[alt=\"Cămașă slim fit din bumbac - alb\"]")).click();
         wait(1);
         driver.findElement(By.cssSelector("#productContainer > section > div.product-info > section.size-picker > div > div.size-selected")).click();
         wait(1);
@@ -100,9 +95,38 @@ public class LogIn{
         homePage.subMenuSHowCart.click();
         wait(1);
         Assert.assertEquals("Coș de cumpărături",driver.findElement(By.cssSelector("[data-dynamicyield=\"cart-heading\"] span")).getText());
-
+      }
+    @Test
+    public void checkOut(){
+        logIn(driver);
+        //add
+        actions = new Actions(driver);
+        actions.moveToElement(homePage.menuItemBarbati).perform();
+        actions.moveToElement(homePage.subMeniuTricouri).perform();
+        homePage.subMeniuTricouri.click();
+        wait(1);
+        driver.findElement(By.cssSelector("[alt=\"Cămașă slim fit din bumbac - bleumarin - RESERVED\"]")).click();
+        wait(1);
+        driver.findElement(By.cssSelector("[alt=\"Cămașă slim fit din bumbac - alb\"]")).click();
+        wait(1);
+        driver.findElement(By.cssSelector("#productContainer > section > div.product-info > section.size-picker > div > div.size-selected")).click();
+        wait(1);
+        driver.findElement(By.cssSelector("#productContainer > section > div.product-info > section.size-picker > div > div.size-list-overlay.visible > div > div:nth-child(2) > div:nth-child(1) > ul > li:nth-child(3)")).click();
+        wait(1);
+        driver.findElement(By.cssSelector("#productContainer > section > div.product-info > section.sc-kEjbQP.cIhnHO > button")).click();
+        wait(2);
+        driver.findElement(By.cssSelector("[data-selen=\"cart-confirmation-close\"]")).click();
+        //go to cart page
+        actions1 = new Actions(driver);
+        actions1.moveToElement(homePage.mainMenuCart).perform();
+        wait(1);
+        actions1.moveToElement(homePage.subMenuSHowCart).perform();
+        homePage.subMenuSHowCart.click();
+        wait(1);
+        driver.findElement(By.cssSelector("[data-selen=\"order-link\"]")).click();
+        Assert.assertTrue(driver.findElement(By.cssSelector(".checkout-order-index")).isDisplayed());
     }
-//    @Ignore
+
     @Test
     public void logOut(){
         if(homePage.mainMenulogged.isDisplayed()){
@@ -121,7 +145,7 @@ public class LogIn{
         }
     }
     //imi face probleme partea asta, incetineste tot testul la final
-   // @After
+    @After
     public void quit(){
         driver.close();
     }
